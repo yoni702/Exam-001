@@ -1,0 +1,32 @@
+---
+ - name: 
+   hosts: all
+   become: true
+   tasks:
+    
+      - name: 001 ensures that backups directory exist 
+        file:
+          path: /backups
+          state: directory
+
+      - name: 002 copy the backup script 
+        copy:
+          src: /home/wave/ansible/home-backup.sh
+          dest: /backups/home-backup.sh
+
+      - name: 003 schedule the execution of the backup script on ‘prod’
+        cron:
+          name: execute script
+          user: root
+          hour: "1"
+          job: /home/wave/ansible/home-backup.sh
+        when: "'prod' in group_names"
+
+
+      - name: 004 schedule the execution of the backup script on ‘dev’ 
+        cron:
+          name: execute script
+          user: root
+          hour: "10"
+          job: /home/wave/ansible/home-backup.sh
+        when: "'dev' in group_names"

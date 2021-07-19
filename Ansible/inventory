@@ -1,0 +1,5 @@
+[dev]
+ip-172-31-14-31.us-east-2.compute.internal
+
+[prod]
+ip-172-31-31-95.us-east-2.compute.internal
